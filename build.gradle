@@ -1,0 +1,67 @@
+
+import org.jooq.codegen.GenerationTool
+import org.jooq.meta.jaxb.*
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.jooq:jooq-codegen:3.13.6'
+        classpath 'org.postgresql:postgresql:42.1.4'
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.5.5'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'org.anisation'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-jooq'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.jetbrains:annotations:20.1.0'
+    implementation 'org.springframework.boot:spring-boot-starter-tomcat'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'org.postgresql:postgresql'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+def project_dir = System.getProperty("user.dir");
+def app_props = new Properties()
+file("src/main/resources/application.properties").withInputStream { app_props.load(it) }
+
+task generate() {
+    doLast() {
+        GenerationTool.generate(new Configuration()
+                .withJdbc(new Jdbc()
+                        .withDriver(app_props.getProperty("spring.datasource.driverClassName"))
+                        .withUrl(app_props.getProperty("spring.datasource.url"))
+                        .withUser(app_props.getProperty("spring.datasource.username"))
+                        .withPassword(app_props.getProperty("spring.datasource.password")))
+                .withGenerator(new Generator()
+                        .withDatabase(new Database()
+                                .withInputSchema('public'))
+                        .withGenerate(new Generate()
+                                .withPojos(true)
+                                .withDaos(true))
+                        .withTarget(new Target()
+                                .withPackageName('org.anisation.jooqGenerated')
+                                //.withDirectory('/home/thomas/IdeaProjects/jOOQbasics/src/main/java'))))
+                                .withDirectory(project_dir + '/src/main/java'))))
+    }
+}
