@@ -2,20 +2,16 @@ package org.anisation.jooqbasics;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 
 @RestController
-public class JooqTestController {
+public class JooqTestController extends DbAccess{
 
     @GetMapping("/")
     public String jooqQueries() throws Exception{
-        String output;
 
-        DbAccess dba = new DbAccess();
-        output = dba.someDbAccess();
 
-        return output;
+        return someDbAccess();
+
     }
     /*
         @RequestMapping(value = "/error", method = RequestMethod.GET)

@@ -61,7 +61,6 @@ task generate() {
                                 .withDaos(true))
                         .withTarget(new Target()
                                 .withPackageName('org.anisation.jooqGenerated')
-                                //.withDirectory('/home/thomas/IdeaProjects/jOOQbasics/src/main/java'))))
                                 .withDirectory(project_dir + '/src/main/java'))))
     }
 }

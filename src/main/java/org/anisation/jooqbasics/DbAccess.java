@@ -1,6 +1,7 @@
 package org.anisation.jooqbasics;
 
 
+import org.anisation.jooqGenerated.tables.DatabaseEntity;
 import org.jooq.DSLContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,10 @@ public class DbAccess {
 
     public String someDbAccess() throws Exception{
         var q1 = jooq.select().from(DATABASE_ENTITY).fetch();
-        return q1.toString();
+
+        String out = q1.stream().toList().toString();
+
+        return out;
     }
+
 }
