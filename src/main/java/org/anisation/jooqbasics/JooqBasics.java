@@ -32,7 +32,8 @@ public class JooqBasics {
                 System.out.println(beanName);
             }
 */
-            System.out.println(ctx.getClass().toString());
+            //System.out.println(ctx.getClass().toString());
+            System.out.println("COMMANDLINE OUTPUT");
         };
     }
 

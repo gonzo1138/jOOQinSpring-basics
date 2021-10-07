@@ -16,11 +16,28 @@ public class HelloController {
 
     @GetMapping("/hello")
     public String hello() throws Exception {
-        return """
+        String head = """
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="utf-8">
+                    <link rel="stylesheet" href="res/style.css">
+                    <script lang="JavaScript" type="text/javascript"  src="res/script.js"></script>
+                    <title>jOOQ within Spring Test-Project</title>
+                </head>
+                <body>
+                """;
+        String body;
+        String foot = """
+                </body>
+                </html>
+                """;
+        body = """
                 <br><br><br><br><br><br><br><br><br><br><br><br><br>
                 <br><br><br><br><br><br><br><br><br><br><br><br><br>
                 <h1 style="text-align: center">Hello World!</h1><br>
                 """;
+        return head + body + foot;
     }
 
 }
